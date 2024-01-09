@@ -1,0 +1,60 @@
+/* Estilo personalizado para el cuerpo de la página con fondo de pantalla */
+body {
+    /*background-image: url('tu-imagen-de-fondo.jpg');*/
+    /* Reemplaza 'tu-imagen-de-fondo.jpg' con la ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    /* Establece la altura al 100% de la ventana gráfica */
+    margin: 0;
+    /* Elimina el margen predeterminado del cuerpo */
+}
+
+.main-page {
+    background: linear-gradient(to right, #ff5227, #feb47b);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para el div que contiene el título */
+.title-container {
+    background-color: rgba(25, 44, 187, 0.7);
+    /* Cambia el color de fondo según tus preferencias */
+    padding: 20px;
+    /* Añade un espacio de relleno alrededor del título */
+    border-radius: 10px;
+    /* Agrega esquinas redondeadas al contenedor */
+    margin-bottom: 20px;
+    /* Ajusta el margen inferior según tus preferencias */
+}
+
+.login-form {
+    background-color: pink;
+    border: 2px;
+    border-radius: 5%;
+    max-width: 30%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.bc-0 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo para el contenedor que alberga los botones en la esquina superior derecha */
+.bc-1 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.bc-2 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
