@@ -27,10 +27,10 @@ app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "ACarvalloM16",
-  password: "ancamo-42",
-  database: "m16"
+  host: "192.168.1.255:3306",
+  user: "angel",
+  password: "angel1234",
+  database: "M16_angel"
 });
 
 db.connect((err) => {
