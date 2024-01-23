@@ -22,8 +22,8 @@
                 <% resultats.forEach(respuesta => { %>
                     <li>
                         <form action="/check-answer" method="post">
-                            <input type="hidden" name="questionId" value="<%=question.id%>">
-                            <button type="submit" name="optionId" value="<%= question.option1 %>"
+                            <input type="hidden" name="questionId" value="<%= question.id %>">
+                            <button type="submit" name="optionId" value="<%= respuesta %>"
                                 class="btn btn-primary">
                                 <%= respuesta%>
                             </button>
