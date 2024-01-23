@@ -8,7 +8,7 @@ const fs = require("fs");
 const ejs = require("ejs"); // Importa el módulo EJS
 
 const app = express();
-const port = 33060;
+const port = 3000;
 
 app.use(session({
   secret: 'keyboard cat',
@@ -28,11 +28,20 @@ app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
 const db = mysql.createConnection({
-  host: "192.168.1.255:3306",
+  host: "192.168.1.255",
+  port: "3306",
   user: "angel",
   password: "angel1234",
   database: "M16_angel"
 });
+
+/*const db = mysql.createConnection({
+  host: "127.0.0.1",
+  port: "3306",
+  user: "root",
+  password: "toorPassword2",
+  database: "m16"
+});*/
 
 db.connect((err) => {
   if (err) throw err;
