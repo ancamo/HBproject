@@ -34,15 +34,15 @@ const db = mysql.createConnection({
   password: "angel1234",
   database: "M16_angel"
 });
-
-/*const db = mysql.createConnection({
+/*
+const db = mysql.createConnection({
   host: "127.0.0.1",
   port: "3306",
   user: "root",
   password: "toorPassword2",
   database: "m16"
-});*/
-
+});
+*/
 db.connect((err) => {
   if (err) throw err;
   console.log('Conectado a MySQL');
@@ -113,17 +113,26 @@ app.post('/auth', (req, res) => {
   });
 });
 
+app.get("/forms", (req, res) => {
+  db.query('SELECT * FROM forms', (err, formsResult) =>{
+    if (err) throw err;
+    const forms = formsResult;
+
+    res.render('forms', { forms });
+  });
+});
+
 app.get('/questions/:formId', (req, res) => {
   const formId = req.params.formId;
 
   // Perform a query to get questions related to the specified formId
   db.query('SELECT * FROM questions WHERE formId = ?', [formId], (err, queryResult) => {
     if (err) throw err;
-    const question = queryResult;
+    const question = queryResult[0];
     const resultats = shuffle([
-      queryResult.correctOption,
-      queryResult.wrongOption1,
-      queryResult.wrongOption2
+      queryResult[0].correctOption,
+      queryResult[0].wrongOption1,
+      queryResult[0].wrongOption2
     ]);
     
     res.render('questions', { question, resultats });
@@ -152,15 +161,6 @@ app.post('/check-answer', (req, res) => {
       // Incorrect answer
       res.render('alert', {message : 'Incorrecte', link : 'forms'})
     }
-  });
-});
-
-app.get("/forms", (req, res) => {
-  db.query('SELECT * FROM forms', (err, formsResult) =>{
-    if (err) throw err;
-    const forms = formsResult;
-
-    res.render('forms', { forms });
   });
 });
 
