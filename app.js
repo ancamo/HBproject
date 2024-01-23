@@ -2,12 +2,13 @@ const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser")
 const crypto = require('crypto');
+const shuffle = require('shuffle-array');
 const mysql = require("mysql2");
 const fs = require("fs");
 const ejs = require("ejs"); // Importa el módulo EJS
 
 const app = express();
-const port = 3000;
+const port = 33060;
 
 app.use(session({
   secret: 'keyboard cat',
@@ -51,6 +52,10 @@ app.get("/logIn", (req, res) => {
 // Ruta per iniciar sessio
 app.get("/singIn", (req, res) => {
   res.sendFile(__dirname + "/public/singIn.html");
+});
+
+app.get("/addQ", (req, res) => {
+  res.sendFile(__dirname + "/public/addQuestions.html")
 });
 
 // Resposta a Formularis
@@ -103,11 +108,16 @@ app.get('/questions/:formId', (req, res) => {
   const formId = req.params.formId;
 
   // Perform a query to get questions related to the specified formId
-  db.query('SELECT * FROM questions WHERE formId = ?', [formId], (err, questionsResult) => {
+  db.query('SELECT * FROM questions WHERE formId = ?', [formId], (err, queryResult) => {
     if (err) throw err;
-    const questions = questionsResult;
+    const question = queryResult;
+    const resultats = shuffle([
+      queryResult.correctOption,
+      queryResult.wrongOption1,
+      queryResult.wrongOption2
+    ]);
     
-    res.render('questions', { questions });
+    res.render('questions', { question, resultats });
   });
 });
 
@@ -145,7 +155,22 @@ app.get("/forms", (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Servidor iniciado en http://localhost:${port}`);
+app.post("/addQuestion", (req, res) => {
+  const questio = req.body.question;
+  const answer1 = req.body.option1;
+  const answer2 = req.body.option2;
+  const answer3 = req.body.option3;
+  
+  db.query('INSERT INTO forms (name) SELECT MAX(id)+1 FROM forms', (err, result) => {
+    if (err) throw err;
+    const newFormId = result.insertId;
+    db.query('INSERT INTO questions (formId, title, correctOption, wrongOption1, wrongOption2) VALUES (?, ?, ?, ?, ?)', [ newFormId, questio, answer1, answer2, answer3 ], (err, insRes) => {
+      if (err) throw err;
+      res.render('alert', {message: 'Questio Afegida', link : 'addQ'})
+    });
+  });
 });
-//algo canvia 2
+
+app.listen(port, () => {
+  console.log(`Servidor iniciado en http://192.168.1.225:${port}`);
+});
