@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
 // Configuración de la conexión a la base de datos
-/*
+
 const db = mysql.createConnection({
   host: "192.168.1.255",
   port: "3306",
@@ -35,14 +35,13 @@ const db = mysql.createConnection({
   password: "angel1234",
   database: "M16_angel"
 });
-*/
-const db = mysql.createConnection({
+/*const db = mysql.createConnection({
   host: "127.0.0.1",
   port: "3306",
   user: "root",
   password: "toorPassword2",
   database: "m16"
-});
+});*/
 
 db.connect((err) => {
   if (err) throw err;
